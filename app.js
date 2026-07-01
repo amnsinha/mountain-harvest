@@ -3,7 +3,7 @@
 const CONFIG = {
   upiId: 'PureHimalaya@ptyes',
   upiName: 'Pure Himalaya',
-    appsScriptUrl: 'https://script.google.com/macros/s/AKfycbxs1FbwUVi_vgts03u8Z5GhRzhg9QC6IxQ2ZFNqqR__3Qzka1EviRC6fD8JjzwAQkz9uQ/exec' // Deploy Code.gs as Web App and paste the /exec URL here
+  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbwqIejG6T3lFkjkFIfCL30WFqTzlL9529YaeefoqPDK-q-Aw6L0X-26Le70qvaU1Rq4Tg/exec'
 };
 
 // Product Catalog
@@ -54,19 +54,17 @@ function loadProducts() {
   const grid = document.getElementById('productsGrid');
   grid.innerHTML = products.map(product => `
     <div class="product-card">
-      <img src="${product.image}" alt="${product.name}" class="product-image">
+      <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/400x300?text=Product'">
       <div class="product-info">
-        <h3 class="product-name">${product.name}</h3>
-        <p class="product-desc">${product.description}</p>
-        <div class="product-footer">
-          <div class="product-price">&#8377;${product.price}</div>
-          <div class="product-quantity">
-            <button class="qty-btn" onclick="updateQuantity(${product.id}, -1)">-</button>
-            <span class="qty-display" id="qty-${product.id}">${getQuantityInCart(product.id)}</span>
-            <button class="qty-btn" onclick="updateQuantity(${product.id}, 1)">+</button>
-          </div>
+        <h3>${product.name}</h3>
+        <p>${product.description}</p>
+        <div class="product-price">&#8377;${product.price}</div>
+        <div class="quantity-control">
+          <button class="qty-btn" onclick="updateQuantity(${product.id}, -1)">-</button>
+          <span id="qty-${product.id}">${getQuantityInCart(product.id)}</span>
+          <button class="qty-btn" onclick="updateQuantity(${product.id}, 1)">+</button>
         </div>
-        <button class="add-to-cart-btn" onclick="addToCart(${product.id})">Add to Cart</button>
+        <button class="btn-primary" onclick="addToCart(${product.id})">Add to Cart</button>
       </div>
     </div>
   `).join('');
@@ -90,7 +88,8 @@ function updateQuantity(productId, change) {
   }
   saveCart();
   updateCartUI();
-  document.getElementById(`qty-${productId}`).textContent = getQuantityInCart(productId);
+  const qtyEl = document.getElementById(`qty-${productId}`);
+  if (qtyEl) qtyEl.textContent = getQuantityInCart(productId);
 }
 
 function addToCart(productId) {
@@ -111,34 +110,31 @@ function updateCartUI() {
   const badge = document.getElementById('cartBadge');
   const cartItems = document.getElementById('cartItems');
   const cartTotal = document.getElementById('cartTotal');
-  
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   badge.textContent = totalItems;
-  
+
   if (cart.length === 0) {
-    cartItems.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
-    cartTotal.textContent = '₹0';
+    cartItems.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
+    cartTotal.textContent = '&#8377;0';
     return;
   }
-  
+
   const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  
   cartItems.innerHTML = cart.map(item => `
     <div class="cart-item">
-      <img src="${item.image}" class="cart-item-image" alt="${item.name}">
+      <img src="${item.image}" alt="${item.name}">
       <div class="cart-item-info">
         <div class="cart-item-name">${item.name}</div>
-        <div class="cart-item-price">₹${item.price} × ${item.quantity}</div>
-        <div class="cart-item-qty">
+        <div class="cart-item-price">&#8377;${item.price} &times; ${item.quantity}</div>
+        <div class="quantity-control">
           <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
-          <span class="qty-display">${item.quantity}</span>
+          <span>${item.quantity}</span>
           <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
         </div>
       </div>
     </div>
   `).join('');
-  
-  cartTotal.textContent = `₹${total}`;
+  cartTotal.textContent = `&#8377;${total}`;
 }
 
 function toggleCart() {
@@ -160,18 +156,19 @@ function proceedToCheckout() {
 function renderOrderSummary() {
   const summary = document.getElementById('orderSummaryCheckout');
   const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  
   summary.innerHTML = `
-    <h4>Order Summary</h4>
-    ${cart.map(item => `
-      <div class="order-item">
-        <span>${item.name} × ${item.quantity}</span>
-        <span>₹${item.price * item.quantity}</span>
+    <div class="order-summary-box">
+      <h4>Order Summary</h4>
+      ${cart.map(item => `
+        <div class="summary-row">
+          <span>${item.name} &times; ${item.quantity}</span>
+          <span>&#8377;${item.price * item.quantity}</span>
+        </div>
+      `).join('')}
+      <div class="summary-row total-row">
+        <strong>Total</strong>
+        <strong>&#8377;${total}</strong>
       </div>
-    `).join('')}
-    <div class="order-total">
-      <span>Total</span>
-      <span>₹${total}</span>
     </div>
   `;
 }
@@ -182,49 +179,36 @@ function goToPayment() {
   const address = document.getElementById('custAddress').value;
   const city = document.getElementById('custCity').value;
   const pin = document.getElementById('custPin').value;
-  
+
   if (!name || !phone || !address || !city || !pin) {
     alert('Please fill all required fields');
     return;
   }
-  
   if (phone.length !== 10) {
     alert('Please enter a valid 10-digit phone number');
     return;
   }
-  
   if (pin.length !== 6) {
     alert('Please enter a valid 6-digit PIN code');
     return;
   }
-  
+
   currentOrderData = {
-    name,
-    phone,
-    address,
-    city,
-    pin,
+    name, phone, address, city, pin,
     coupon: document.getElementById('couponCode').value
   };
-  
   goToStep(2);
   generatePaymentQR();
 }
 
 function generatePaymentQR() {
   const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  
   document.getElementById('paymentAmount').innerHTML = `
-    <h3>Pay ₹${total}</h3>
-    <p style="color: var(--text-gray); margin-top: 0.5rem;">Scan QR or use UPI ID below</p>
+    <h3>Pay &#8377;${total}</h3>
+    <p>Scan QR or use UPI ID below</p>
   `;
-  
-  // Generate UPI payment string
   const upiString = `upi://pay?pa=${CONFIG.upiId}&pn=${encodeURIComponent(CONFIG.upiName)}&am=${total}&cu=INR&tn=${encodeURIComponent('Mountain Harvest Order')}`;
-  
-  // Generate QR using Google Charts API
   const qrUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(upiString)}&choe=UTF-8`;
-  
   document.getElementById('qrContainer').innerHTML = `<img src="${qrUrl}" alt="Payment QR Code">`;
   document.getElementById('upiIdDisplay').textContent = CONFIG.upiId;
 }
@@ -243,17 +227,20 @@ function handleFileUpload(input) {
 
 function submitOrder() {
   const screenshot = document.getElementById('paymentScreenshot').files[0];
-  
   if (!screenshot) {
     alert('Please upload payment screenshot');
     return;
   }
-  
-  // Generate Order ID
+
+  const submitBtn = document.querySelector('#step2 .btn-primary');
+  if (submitBtn) {
+    submitBtn.textContent = 'Submitting...';
+    submitBtn.disabled = true;
+  }
+
   const orderId = 'MH' + Date.now().toString().slice(-6);
   const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  
-  // Prepare order data
+
   const orderData = {
     orderId,
     ...currentOrderData,
@@ -261,23 +248,16 @@ function submitOrder() {
     total,
     timestamp: new Date().toISOString()
   };
-  
-  // Convert screenshot to base64
+
   const reader = new FileReader();
   reader.onloadend = function() {
     orderData.paymentScreenshot = reader.result;
-    sendOrderToBackend(orderData);
+    sendOrderToBackend(orderData, submitBtn);
   };
   reader.readAsDataURL(screenshot);
 }
 
-function sendOrderToBackend(orderData) {
-  // Show loading state
-  const submitBtn = event.target;
-  submitBtn.textContent = 'Submitting...';
-  submitBtn.disabled = true;
-  
-  // Send to Google Apps Script
+function sendOrderToBackend(orderData, submitBtn) {
   fetch(CONFIG.appsScriptUrl, {
     method: 'POST',
     mode: 'no-cors',
@@ -285,26 +265,27 @@ function sendOrderToBackend(orderData) {
     body: JSON.stringify(orderData)
   })
   .then(() => {
-    // Show success
     document.getElementById('displayOrderId').textContent = orderData.orderId;
     goToStep(3);
-    
-    // Clear cart
     cart = [];
     saveCart();
     updateCartUI();
-    
-    submitBtn.textContent = 'Submit Order ✓';
-    submitBtn.disabled = false;
+    if (submitBtn) {
+      submitBtn.textContent = 'Submit Order';
+      submitBtn.disabled = false;
+    }
   })
   .catch(error => {
     console.error('Error:', error);
-    // Still show success (no-cors mode)
     document.getElementById('displayOrderId').textContent = orderData.orderId;
     goToStep(3);
     cart = [];
     saveCart();
     updateCartUI();
+    if (submitBtn) {
+      submitBtn.textContent = 'Submit Order';
+      submitBtn.disabled = false;
+    }
   });
 }
 
@@ -325,7 +306,10 @@ function goToStep(stepNum) {
 
 function resetOrder() {
   currentOrderData = null;
-  document.getElementById('checkoutForm').reset();
-  document.getElementById('paymentScreenshot').value = '';
-  document.getElementById('fileUploadText').textContent = 'Click to upload payment screenshot';
+  const form = document.getElementById('checkoutForm');
+  if (form) form.reset();
+  const screenshotInput = document.getElementById('paymentScreenshot');
+  if (screenshotInput) screenshotInput.value = '';
+  const uploadText = document.getElementById('fileUploadText');
+  if (uploadText) uploadText.textContent = 'Click to upload payment screenshot';
 }
