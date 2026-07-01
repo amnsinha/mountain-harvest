@@ -3,7 +3,7 @@
 const CONFIG = {
   upiId: 'PureHimalaya@ptyes',
   upiName: 'Pure Himalaya',
-    appsScriptUrl: 'https://script.google.com/home/projects/1DsFvHr_A2lP1U_j4P0MDs8KybcLwcwIWvunSSuilfF6mpv69MlYRgVEA/edit' // Deploy Code.gs as Web App and paste the /exec URL here
+    appsScriptUrl: 'https://script.google.com/macros/s/AKfycbxs1FbwUVi_vgts03u8Z5GhRzhg9QC6IxQ2ZFNqqR__3Qzka1EviRC6fD8JjzwAQkz9uQ/exec' // Deploy Code.gs as Web App and paste the /exec URL here
 };
 
 // Product Catalog
