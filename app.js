@@ -13,7 +13,7 @@ const products = [
     name: 'Sea Buckthorn Juice',
     price: 799,
     image: 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400',
-    description: 'Rich in Vitamin C and antioxidants, sourced from Ladakh'
+    description: 'RRich in Vitamin C and antioxidants, sourced from Ladakh'
   },
   {
     id: 2,
