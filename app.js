@@ -19,22 +19,8 @@ const products = [
     id: 2,
     name: 'Gucchi Mushrooms (50g)',
     price: 3999,
-    image: 'https://images.unsplash.com/photo-1590137876181-2d85a3d483d6?w=400',
+    image: 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400',
     description: 'Premium dried morels from Himachal Pradesh'
-  },
-  {
-    id: 3,
-    name: 'Wild Himalayan Honey',
-    price: 1299,
-    image: 'https://images.unsplash.com/photo-1587049352846-4a222e784386?w=400',
-    description: 'Raw, unprocessed honey from mountain wildflowers'
-  },
-  {
-    id: 4,
-    name: 'Apricot Kernel Oil',
-    price: 899,
-    image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=400',
-    description: 'Cold-pressed oil from Hunza apricots'
   }
 ];
 
