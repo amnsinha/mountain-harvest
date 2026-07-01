@@ -3,7 +3,7 @@
 const CONFIG = {
   upiId: 'PureHimalaya@ptyes',
   upiName: 'Pure Himalaya',
-  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbwqIejG6T3lFkjkFIfCL30WFqTzlL9529YaeefoqPDK-q-Aw6L0X-26Le70qvaU1Rq4Tg/exec'
+    appsScriptUrl: 'https://script.google.com/macros/s/AKfycbwtn-lChzTjnf8Y8Ht7kLgPJKPT9s4vffzyCCDG4MDxllksjmiOSRJ4Z-E1O7X0cCfe/exec'
 };
 
 // Product Catalog
