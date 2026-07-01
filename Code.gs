@@ -3,7 +3,7 @@
 
 // CONFIGURATION
 const CONFIG = {
-  yourEmail: 'your-email@gmail.com', // Replace with your email
+  yourEmail: 'sinha.amn@gmail.com', // Replace with your email
   sheetName: 'Orders',
   customerEmailTemplate: true,
   adminEmailTemplate: true
