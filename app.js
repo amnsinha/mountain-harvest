@@ -54,7 +54,7 @@ function loadProducts() {
   const grid = document.getElementById('productsGrid');
   grid.innerHTML = products.map(product => `
     <div class="product-card">
-      <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/400x300?text=Product'">
+      <img src="${product.image}" alt="${product.name}">
       <div class="product-info">
         <h3>${product.name}</h3>
         <p>${product.description}</p>
