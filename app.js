@@ -3,7 +3,7 @@
 const CONFIG = {
   upiId: 'aman@oksbi',
   upiName: 'Mountain Harvest',
-  appsScriptUrl: 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' // Will be updated after deployment
+  appsScriptUrl: 'https://github.com/amnsinha/mountain-harvest/blob/main/Code.gs' // Will be updated after deployment
 };
 
 // Product Catalog
