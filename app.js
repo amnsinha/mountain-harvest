@@ -3,7 +3,7 @@
 const CONFIG = {
   upiId: 'PureHimalaya@ptyes',
   upiName: 'Pure Himalaya',
-  appsScriptUrl: 'https://github.com/amnsinha/mountain-harvest/blob/main/Code.gs' // Will be updated after deployment
+    appsScriptUrl: 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL' // Deploy Code.gs as Web App and paste the /exec URL here
 };
 
 // Product Catalog
