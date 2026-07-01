@@ -1,8 +1,8 @@
 // Mountain Harvest - E-commerce JavaScript
 // Configuration
 const CONFIG = {
-  upiId: 'aman@oksbi',
-  upiName: 'Mountain Harvest',
+  upiId: 'PureHimalaya@ptyes',
+  upiName: 'Pure Himalaya',
   appsScriptUrl: 'https://github.com/amnsinha/mountain-harvest/blob/main/Code.gs' // Will be updated after deployment
 };
 
